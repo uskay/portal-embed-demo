@@ -1,0 +1,21 @@
+{
+  "name": "portal-embed-demo",
+  "version": "0.1.0",
+  "description": "A demo of using portals as an embed in an article",
+  "main": "server.js",
+  "scripts": {
+    "demo": "node server.js",
+    "lint": "gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.12.0",
+    "gulp": "^4.0.1",
+    "gulp-eslint": "^5.0.0"
+  }
+}
