@@ -9,6 +9,10 @@
   },
   "author": "Yusuke Utsunomiya",
   "license": "W3C",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uskay/portal-embed-demo.git"
+  },
   "dependencies": {
     "express": "^4.16.4"
   },
