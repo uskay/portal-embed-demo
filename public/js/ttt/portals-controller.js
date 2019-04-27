@@ -197,6 +197,7 @@ if(window.portalHost){
     const portalsController = new PortalsController();
     portalsController.setDisplayMode(portalsController.EMBED);
 } else if (window.self !== window.top) {
+    // iframe fallback
     document.querySelector('#header').style.display = 'none';
     document.querySelector('#detail').style.display = 'none';
     document.querySelector('#follow').style.display = 'none';
