@@ -8,7 +8,7 @@
     "lint": "gulp"
   },
   "author": "Yusuke Utsunomiya",
-  "license": "W3C Software and Document License.",
+  "license": "W3C",
   "dependencies": {
     "express": "^4.16.4"
   },
