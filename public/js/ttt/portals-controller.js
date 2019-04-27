@@ -5,17 +5,17 @@
 class PortalsController {
 
     /**
-     * Display mode options
-     */
-    RESET = 'RESET';
-    EMBED = 'EMBED';
-    ACTIVATE = 'ACTIVATE';
-    PREDECESSOR_ACTIVATE = 'PREDECESSOR_ACTIVATE';
-
-    /**
      * Initiating controller
      */
     constructor() {
+        /**
+         * Display mode options
+         */
+        this.RESET = 'RESET';
+        this.EMBED = 'EMBED';
+        this.ACTIVATE = 'ACTIVATE';
+        this.PREDECESSOR_ACTIVATE = 'PREDECESSOR_ACTIVATE';
+
         // All the UI references
         this.main = document.querySelector('#main');
         this.header = document.querySelector('#header');
@@ -39,6 +39,8 @@ class PortalsController {
     setDisplayMode(mode, option) {
         switch (mode) {
             case this.RESET:
+                // Displaying all the components
+                // Need to change the opacity as well for the animation to work
                 this.header.style.display = 'block';
                 this.header.style.opacity = 1;
                 this.detail.style.display = 'block';
@@ -47,6 +49,8 @@ class PortalsController {
                 this.follow.style.opacity = 1;
                 this.recommendation.style.display = 'block';
                 this.recommendation.style.opacity = 1;
+
+                // Resetting all the styles
                 this.main.style.transition = ''
                 this.main.style.width = '100%';
                 this.main.style.marginTop = '0px';
@@ -57,6 +61,7 @@ class PortalsController {
                 this.lightbox.style.opacity = 0;
                 this.heroImg.style.transition = ''
                 this.heroImg.style.top = '0px';
+
                 // clear any exisiting portal element on reset
                 const predecessorPortal = this.embed.querySelector('portal');
                 if (predecessorPortal) {
@@ -69,6 +74,7 @@ class PortalsController {
                 this.detail.style.display = 'none';
                 this.follow.style.display = 'none';
                 this.recommendation.style.display = 'none';
+                document.body.style.overflow = 'hidden';
                 break;
             case this.ACTIVATE:
                 const { followed, name, photoSrc, activatedWidth, predecessor } = option;
@@ -80,8 +86,9 @@ class PortalsController {
                 this.detail.classList.add('animateOpacityTo_1_0');
                 this.recommendation.style.display = 'block';
                 this.recommendation.classList.add('animateOpacityTo_1_0');
+                document.body.style.overflow = 'visible';
 
-                // Add writer-follow custom element if the writer was not followed already
+                // Add writer-follow element if the writer was not followed already
                 if (!followed) {
                     const existingWriterFollow = follow.querySelector('writer-follow');
                     if (existingWriterFollow) {
@@ -120,6 +127,7 @@ class PortalsController {
                 this.heroImg.style.top = (initialY - 170) + 'px';
                 this.main.style.transition = 'width 0.3s'
                 this.main.style.width = `${initialWidth}px`;
+                this.audioController.hide();
                 break;
             default:
         }
@@ -143,7 +151,8 @@ class PortalsController {
                 activatedWidth: evt.data.activatedWidth,
                 predecessor: evt.adoptPredecessor()
             }
-
+            // animate the audio controller
+            this.audioController.show();
             this.setDisplayMode(this.ACTIVATE, option);
         })
 
@@ -161,11 +170,9 @@ class PortalsController {
             if (evt.propertyName === 'top') {
                 const predecessor = document.querySelector('portal');
                 predecessor.activate().then(_ => {
-                    console.log('kitayo')
+                    this.audioController.show();
                     this.setDisplayMode(this.RESET);
-                    console.log('kitayo')
                     this.setDisplayMode(this.EMBED);
-                    console.log('kitayo')
                 });
             }
         })
@@ -177,6 +184,7 @@ class PortalsController {
                 case 'play': this.audioController.play(); break;
                 case 'pause': this.audioController.pause(); break;
                 case 'next': this.audioController.next(); break;
+                case 'hide': this.audioController.hide(); break;
             }
         })
 
@@ -193,6 +201,7 @@ if(window.portalHost){
     document.querySelector('#detail').style.display = 'none';
     document.querySelector('#follow').style.display = 'none';
     document.querySelector('#recommendation').style.display = 'none';
+    document.body.style.overflow = 'hidden';
 } else {
     // do nothing. let it be.
 }

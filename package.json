@@ -1,14 +1,14 @@
 {
   "name": "portal-embed-demo",
-  "version": "0.1.0",
-  "description": "A demo of using portals as an embed in an article",
+  "version": "1.0.0",
+  "description": "This demo demonstrates how Portals can enable a seamless user experience between a website and a third party embed content",
   "main": "server.js",
   "scripts": {
     "demo": "node server.js",
     "lint": "gulp"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yusuke Utsunomiya",
+  "license": "W3C Software and Document License.",
   "dependencies": {
     "express": "^4.16.4"
   },

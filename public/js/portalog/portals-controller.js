@@ -47,10 +47,15 @@ class PortalsController {
             this.initialWidth = this.root.getBoundingClientRect().width;
             this._remove(this.root.querySelector('.message-controller'));
             this.root.style.transition =
-                `top 0.6s cubic-bezier(.49,.86,.37,1.01), 
-                width 0.3s cubic-bezier(.49,.86,.37,1.01)`;
+                `top 0.6s cubic-bezier(.49,.86,.37,1.01),
+                 left 0.3s cubic-bezier(.49,.86,.37,1.01), 
+                width 0.3s cubic-bezier(.49,.86,.37,1.01),
+                padding-top 0.3s cubic-bezier(.49,.86,.37,1.01)`;
             this.root.style.top = `${this.anmiateY - this.initialY}px`;
             this.root.style.width = '95%';
+            this.root.style.paddingTop = 'calc(95% * 0.65)';
+            this.root.style.left = 'calc((100% - 95%)/2)';
+            this.portal.postMessage({ control: 'hide' }, this.origin);
         });
 
     }
@@ -59,7 +64,7 @@ class PortalsController {
      * Adding event listeners
      */
     hookEvents() {
-
+        
         // Event fires when coming back from TTT Archive
         window.addEventListener('portalactivate', (evt) => {
             // reset the overflow style to default
@@ -165,7 +170,9 @@ class PortalsController {
     _resetRoot() {
         this.root.style.transition = '';
         this.root.style.width = '100%';
+        this.root.style.paddingTop = '65%';
         this.root.style.top = '0px';
+        this.root.style.left = '0px';
     }
 
     /**
@@ -185,11 +192,19 @@ class PortalsController {
 
 }
 
+let portalPort = 3001;
+if(location.search) {
+    const matchResult = location.search.match(/portalport=(\d{4})/);
+    if(matchResult[1]){
+        portalPort = matchResult[1];
+    }
+}
+
 if('HTMLPortalElement' in window){
     // Create instance
     const portalsController = new PortalsController(
         document.querySelector('#embed'),
-        'http://localhost:3001',
+        `http://localhost:${portalPort}`,
         '/',
         170
     );
@@ -199,7 +214,7 @@ if('HTMLPortalElement' in window){
     portalsController.hookEvents();
 } else {
     // iframe fallback
-    const embedURL = "http://localhost:3001/";
+    const embedURL = `http://localhost:${portalPort}`;
     const iframe = document.createElement('iframe');
     const link = document.createElement('div');
     link.style.width = '100%';
@@ -215,6 +230,8 @@ if('HTMLPortalElement' in window){
     iframe.src = embedURL;
     document.querySelector('#embed').appendChild(iframe);
     document.querySelector('#embed').appendChild(link);
+    // show fallback message
+    document.querySelector('#fallback-message').style.display = "block";
 
 }
 

@@ -12,7 +12,7 @@ class AudioController extends HTMLElement {
     connectedCallback() {
         // Attach to Shadow DOM
         this.root = this.attachShadow({mode: 'open'});
-        this.root.innerHTML = `<style>${this.style}</style>${this.template}`;
+        this.root.innerHTML = `<style>${this.css}</style>${this.template}`;
 
         // All the UI references
         this.player = this.root;
@@ -21,6 +21,7 @@ class AudioController extends HTMLElement {
         this.prevButton = this.root.querySelector('.prev');
         this.timeline = this.root.querySelector('.timeline');
         this.axis = this.root.querySelector('.axis');
+        this.audioTitle = this.root.querySelector('.title');
 
         // Initiate the audio player
         const audioId = this.getAttribute('data-audioid');
@@ -35,7 +36,7 @@ class AudioController extends HTMLElement {
     /**
      * CSS
      */
-    get style() {
+    get css() {
         return `
             :host {
                 width: 100%;
@@ -141,6 +142,7 @@ class AudioController extends HTMLElement {
         this.playButton.src = '/img/play.png';
         this.playButton.setAttribute('playing', false);
         this.audio.pause();
+        console.log(this._getAxisCurrentLeft());
         // Stop the progress bar
         this.axis.style.left = `${this._getAxisCurrentLeft()}px`;
     }
@@ -219,6 +221,22 @@ class AudioController extends HTMLElement {
     }
 
     /**
+     * Hiding the controller with anmimation
+     */
+    hide() {
+        this.style.transition = 'bottom 0.6s';
+        this.style.bottom = '-80px';
+    }
+
+    /**
+     * Showing the controller with anmimation
+     */
+    show() {
+        this.style.transition = 'bottom 0.2s';
+        this.style.bottom = '0px';
+    }
+
+    /**
      * Adding event listeners for the buttons
      */
     _hookEvents() {
@@ -254,7 +272,7 @@ class AudioController extends HTMLElement {
 
         // Resetting the progress bar
         this.durationSec = audioList[id].durationSec;
-        this.root.querySelector('.title').innerHTML
+        this.audioTitle.innerHTML
             = `${audioList[id].title} - Totally Tooling Tips`;
         this.axis.style.transition = '';
         this.axis.style.left = '0px';
@@ -299,7 +317,7 @@ class AudioController extends HTMLElement {
      */
     _getAxisCurrentLeft() {
         const timelineWidth = this.timeline.offsetWidth;
-        const playerWidth = this.player.offsetWidth;
+        const playerWidth = this.audioTitle.offsetWidth;
         const offset = (playerWidth - timelineWidth)/2;
         const rectLeft = this.axis.getBoundingClientRect().left;
         return rectLeft - offset;

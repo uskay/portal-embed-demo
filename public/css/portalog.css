@@ -80,21 +80,30 @@ body {
     color: #FFF;
 }
 
+.placeholder {
+    width: 100%;
+    padding-top: 65%;
+    margin: 40px auto;
+    position: relative;
+}
+
 #embed {
     top: 0px;
-    margin: 40px auto;
+    margin: 0px auto;
     width: 100%;
-    padding-top:50%;
-    position:relative;                
+    padding-top:65%;
+    position: absolute;                
     border-radius: 3px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     background-color: #999;
+    overflow: hidden;
+    left: 0px;
 }
 portal, iframe{
     width:100%;
     height: 100%;
-    overflow: none;
-    position:absolute;
+    overflow: hidden;
+    position: absolute;
     border-radius: 3px;
     top: 50%;
     left: 50%;
@@ -106,11 +115,21 @@ portal, iframe{
     height:40px;
     width:180px;
     z-index:10000;
-    position:relative;
+    position:absolute;
+    bottom: 0px;
+    left: calc(50% - 90px);
+    cursor: pointer;
 }
 .message-button {
     width: 60px;
     height: 80%;
     text-align: center;
     float: left;
+}
+#fallback-message {
+    margin-top: 20px;
+    margin-bottom: -30px;
+    color: red;
+    font-style: italic;
+    display: none;
 }
