@@ -36,6 +36,8 @@ class PortalsController {
             // Or else, create new portal
             this.portal = document.createElement('portal');
             this.portal.src = this.origin + this.path;
+            // https://developers.google.com/web/updates/2017/09/autoplay-policy-changes
+            // TODO: autoplay workaround
         }
         const messageUI = this._genPortalMessageUI();
         this.root.appendChild(this.portal);

@@ -28,6 +28,7 @@ class AudioController extends HTMLElement {
         this._createNewAudio(audioId);
         this.playlist = [audioId];
         this.playlistIndex = 0;
+        this.isPlaying = false;
 
         // Add event listeners
         this._hookEvents();
@@ -113,7 +114,7 @@ class AudioController extends HTMLElement {
                     <img class='prev flip-horizontal' src='/img/next.png'>
                 </div>
                 <div class='controller'>
-                    <img class='play' src='/img/play.png' playing='false'>
+                    <img class='play' src='/img/play.png'>
                 </div>
                 <div class='controller'>
                     <img class='next' src='/img/next.png'>
@@ -124,28 +125,39 @@ class AudioController extends HTMLElement {
 
     /**
      * Controlling play button
-     * Deprioritized implementing (b/c it's no the point of this demo)
-     *  - Dynamic axis animation range due to timeline size change
-     *  - Stop button/feature after fully playing the audio
      */
     play() {
         this.playButton.src = '/img/pause.png';
-        this.playButton.setAttribute('playing', true);
-        this.audio.play();
-        // Start the progress bar
-        const left = this.timeline.offsetWidth;
-        this.axis.style.transition = `${this.durationSec}s linear`;
-        this.axis.style.left = `${left}px`;
+        const startAxis = _ => {
+            // Start the progress bar
+            const left = this.timeline.offsetWidth;
+            this.axis.style.transition = `${this.durationSec}s linear`;
+            this.axis.style.left = `${left}px`;
+            this.isPlaying = true;
+        }
+        // https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
+        const promise = this.audio.play();
+        if(promise !== undefined) {
+            promise.then(_ => {
+                startAxis();
+            }).catch(e => {
+                console.log(e);
+            });
+            return;
+        }
+        startAxis();
     }
 
     /**
      * Controlling pause button
      */
     pause() {
+        if(!this._isPlaying()) {
+            return;
+        }
         this.playButton.src = '/img/play.png';
-        this.playButton.setAttribute('playing', false);
+        this.isPlaying = false;
         this.audio.pause();
-        console.log(this._getAxisCurrentLeft());
         // Stop the progress bar
         this.axis.style.left = `${this._getAxisCurrentLeft()}px`;
     }
@@ -240,6 +252,20 @@ class AudioController extends HTMLElement {
     }
 
     /**
+     * Adding anything required to do on portal activate
+     */
+    handleActivation() {
+        if(this._isPlaying()) {
+            // change the left transition position
+            const currentLeft = this._getAxisCurrentLeft();
+            const left = this.timeline.offsetWidth;
+            const duration = this.durationSec * (1 - currentLeft/left);
+            this.axis.style.transition = `${duration}s linear`;
+            this.axis.style.left = `${left}px`;
+        }
+    }
+
+    /**
      * Adding event listeners for the buttons
      */
     _hookEvents() {
@@ -252,6 +278,10 @@ class AudioController extends HTMLElement {
         });
         this.nextButton.addEventListener('click', evt => this.next());
         this.prevButton.addEventListener('click', evt => this.prev());
+        this.audio.addEventListener("ended", evt => {
+            this.pause();
+            this._createNewAudio(this.playlist[this.playlistIndex]);
+       });
     }
 
     /**
@@ -331,7 +361,7 @@ class AudioController extends HTMLElement {
      * @returns {boolean}
      */
     _isPlaying() {
-        return this.playButton.getAttribute('playing') === 'true';
+        return this.isPlaying;
     }
 
 

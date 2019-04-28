@@ -153,6 +153,7 @@ class PortalsController {
             }
             // animate the audio controller
             this.audioController.show();
+            this.audioController.handleActivation();
             this.setDisplayMode(this.ACTIVATE, option);
         })
 
@@ -171,6 +172,7 @@ class PortalsController {
                 const predecessor = document.querySelector('portal');
                 predecessor.activate().then(_ => {
                     this.audioController.show();
+                    this.audioController.handleActivation();
                     this.setDisplayMode(this.RESET);
                     this.setDisplayMode(this.EMBED);
                 });
