@@ -4,22 +4,22 @@
 export const audioList = {
     tata: {
         title: 'Ta ta for now',
-        durationSec: 8*60+15,
+        durationSec: 2*60,
         imgURL: ''
     },
     ssr: {
         title: 'Server-side Rendering',
-        durationSec: 5*60+41,
+        durationSec: 2*60,
         imgURL: '/img/rob.png'
     },
     github: {
         title: 'GitHub Workflow Pro-Tips',
-        durationSec: 6*60+18,
+        durationSec: 2*60,
         imgURL: '/img/matt.png'
     },
     lighthouse: {
         title: 'Lighthouse',
-        durationSec: 8*60+2,
+        durationSec: 2*60,
         imgURL: '/img/eric.png'
     }
 }
