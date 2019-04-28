@@ -103,7 +103,7 @@ class WriterFollow extends HTMLElement {
             const portal = document.querySelector('portal');
             if(isFollowed){
                 // Send message to the predecessor: unfollow
-                portal.postMessage({isFollowed: false}, ORIGIN)
+                portal.postMessage({isFollowed: false}, ORIGIN);
                 follow.classList.remove('followed');
                 follow.textContent = 'Follow in PORTALOG';                
             } else {
