@@ -124,6 +124,9 @@ class AudioController extends HTMLElement {
 
     /**
      * Controlling play button
+     * Deprioritized implementing (b/c it's no the point of this demo)
+     *  - Dynamic axis animation range due to timeline size change
+     *  - Stop button/feature after fully playing the audio
      */
     play() {
         this.playButton.src = '/img/pause.png';

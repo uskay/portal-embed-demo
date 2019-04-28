@@ -16,7 +16,7 @@ This demo demonstrates how Portals can enable a seamless user experience between
 ## Running the demo
 ### 1. Run the app
 ```bash
-$ git clone https://github.com/uskay/portal-embed-demo.git
+$ git clone --depth 1 https://github.com/uskay/portal-embed-demo.git
 $ cd portal-embed-demo
 $ npm install
 $ npm run demo
