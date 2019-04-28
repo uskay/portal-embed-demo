@@ -79,7 +79,7 @@ if(window.portalHost){
    // embedded as portals
 }
 ```
-> Demo code reference: [Check if window.portalHost is avaiable](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L196) and [change the style](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L198)
+> Demo code reference: [Check if window.portalHost is avaiable](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L198) and [change the style](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L200)
 
 For now, Portal will not process user input. If you want to interact with the Portal (like playing the audio in the demo), use `postMessage`/`onmessage`.
 ```javascript
@@ -93,7 +93,7 @@ window.portalHost.addEventListener('message', evt => {
    // do the actual following
 });
 ```
-> Demo code reference: interacting with the audio player ([sending messages](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L133) and [receiving messages](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L181))
+> Demo code reference: interacting with the audio player ([sending messages](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L135) and [receiving messages](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/portals-controller.js#L183))
 
 When the user decides to navigate the the Portal content i.e. click, it is a good opportunity to animate the Portal and then call the `activate` function. User will be navigated to the Portal content seamlessly (but the URL changes). You can also see that the session of the Portal content is consistent and the audio keeps playing even after this activation.
 ```javascript
@@ -102,7 +102,7 @@ When the user decides to navigate the the Portal content i.e. click, it is a goo
 const portal = document.querySelector('portal');
 portal.activate();
 ```
-> Demo code reference: [doing some animation on user click](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L45) and [activating the Portal](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L83) (note that you can optionally pass [custom data](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L84) to the Portal)
+> Demo code reference: [doing some animation on user click](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L47) and [activating the Portal](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L85) (note that you can optionally pass [custom data](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L86) to the Portal)
 
 For the Portal content side, you can listen to the `portalactivate` event to check if the page was activated. Also from the event you can retrieve the previous page as a Portal element by calling the `adoptPredecessor` function. By leveraging the predecessor Portal element, you can implement a seamless navigation experience when going back and forth between the two pages (or origins).
 ```javascript
@@ -136,7 +136,7 @@ portal.activate().then(_ => {
    }
 });
 ```
-> Demo code reference: [sending messages to follow](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/writer-follow.js#L106) the writer of PORTALOG and [handling the event in the article page](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L103)
+> Demo code reference: [sending messages to follow](https://github.com/uskay/portal-embed-demo/blob/master/public/js/ttt/writer-follow.js#L106) the writer of PORTALOG and [handling the event in the article page](https://github.com/uskay/portal-embed-demo/blob/master/public/js/portalog/portals-controller.js#L105)
 
 
 ## Disclaimer
